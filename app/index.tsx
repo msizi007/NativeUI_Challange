@@ -7,7 +7,7 @@ import {
 import React from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import capsules from "../assets/capsules.png";
-import icon from "../assets/icon.png";
+import icon from "../assets/icon2.png";
 
 export default function ProductScreen() {
   return (
