@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Navigation v7 Implementation Guide</title>
+    <style>
+        :root {
+            --primary-color: #f4511e; /* From user's header config */
+            --bg-color: #f4f6f8;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --code-bg: #1e1e1e;
+            --code-text: #d4d4d4;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #1a1a1a;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin-top: 30px;
+            color: #2c3e50;
+            font-size: 1.4em;
+        }
+
+        h3 {
+            color: #444;
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        /* Code Block Styling */
+        pre {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: "Consolas", "Monaco", "Courier New", monospace;
+            font-size: 14px;
+            border: 1px solid #333;
+        }
+
+        code {
+            font-family: inherit;
+        }
+
+        /* Syntax Highlighting Simulation */
+        .kw { color: #569cd6; } /* Keywords (import, const, function) */
+        .fn { color: #dcdcaa; } /* Functions */
+        .str { color: #ce9178; } /* Strings */
+        .num { color: #b5cea8; } /* Numbers/Hex */
+        .typ { color: #4ec9b0; } /* Types/Components */
+        .com { color: #6a9955; font-style: italic; } /* Comments */
+        .tag { color: #808080; } /* Tags/Brackets */
+
+        .note {
+            background-color: #fff8e1;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .filename {
+            font-family: monospace;
+            background-color: #eee;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>React Navigation v7: Static API</h1>
+
+    <p>Based on the syntax you provided, you are using the <strong>Static API</strong> introduced in React Navigation v7. This is a modern, simplified way to define navigation.</p>
+
+    <p>Since you have the stack definition, you need two additional things to make it work:</p>
+    <ol>
+        <li>The actual <strong>Screen Component</strong> (<code>HomeScreen</code>).</li>
+        <li>A way to <strong>render the navigation</strong> (<code>createStaticNavigation</code>).</li>
+    </ol>
+
+    <h2>Complete Implementation</h2>
+    <p>Copy the code below into your main <span class="filename">App.js</span> or <span class="filename">App.tsx</span> file.</p>
+
+<pre><code><span class="kw">import</span> React <span class="kw">from</span> <span class="str">'react'</span>;
+<span class="kw">import</span> { View, Text, StyleSheet } <span class="kw">from</span> <span class="str">'react-native'</span>;
+<span class="kw">import</span> { createStaticNavigation } <span class="kw">from</span> <span class="str">'@react-navigation/native'</span>;
+<span class="kw">import</span> { createNativeStackNavigator } <span class="kw">from</span> <span class="str">'@react-navigation/native-stack'</span>;
+
+<span class="com">// 1. Define your Screen Component</span>
+<span class="kw">function</span> <span class="fn">HomeScreen</span>() {
+  <span class="kw">return</span> (
+    &lt;<span class="typ">View</span> style={styles.container}&gt;
+      &lt;<span class="typ">Text</span> style={styles.text}&gt;Welcome to Home!&lt;/<span class="typ">Text</span>&gt;
+    &lt;/<span class="typ">View</span>&gt;
+  );
+}
+
+<span class="com">// 2. Define your Stack (Your provided code)</span>
+<span class="kw">const</span> MyStack = <span class="fn">createNativeStackNavigator</span>({
+  screens: {
+    Home: {
+      screen: HomeScreen,
+      options: {
+        title: <span class="str">'My home'</span>,
+        headerStyle: {
+          backgroundColor: <span class="str">'#f4511e'</span>,
+        },
+        headerTintColor: <span class="str">'#fff'</span>,
+        headerTitleStyle: {
+          fontWeight: <span class="str">'bold'</span>,
+        },
+      },
+    },
+  },
+});
+
+<span class="com">// 3. Create the Navigation Container</span>
+<span class="kw">const</span> Navigation = <span class="fn">createStaticNavigation</span>(MyStack);
+
+<span class="com">// 4. Export the App</span>
+<span class="kw">export default function</span> <span class="fn">App</span>() {
+  <span class="kw">return</span> &lt;<span class="typ">Navigation</span> /&gt;;
+}
+
+<span class="com">// Simple styles for the demo</span>
+<span class="kw">const</span> styles = StyleSheet.<span class="fn">create</span>({
+  container: {
+    flex: <span class="num">1</span>,
+    alignItems: <span class="str">'center'</span>,
+    justifyContent: <span class="str">'center'</span>,
+  },
+  text: {
+    fontSize: <span class="num">20</span>,
+    color: <span class="str">'#333'</span>,
+  },
+});</code></pre>
+
+    <h2>Key Steps Explained</h2>
+    
+    <h3>1. HomeScreen</h3>
+    <p>You referenced <code>screen: HomeScreen</code> in your configuration, so we must define this function so React knows what visual elements to display.</p>
+
+    <h3>2. createStaticNavigation</h3>
+    <p>This is the "magic glue" in React Navigation v7. It takes your configuration object (<code>MyStack</code>) and automatically wraps it in a Navigation Container, handling all the state management for you.</p>
+
+    <h3>3. App Component</h3>
+    <p>Finally, we export an App component that simply returns the <code>&lt;Navigation /&gt;</code> component we created.</p>
+
+    <h2>Required Dependencies</h2>
+    <p>If you haven't installed the packages yet, run this in your terminal:</p>
+    <pre><code>npm install @react-navigation/native @react-navigation/native-stack react-native-screens react-native-safe-area-context</code></pre>
+
+    <div class="note">
+        <strong>Note on "One Page":</strong><br>
+        Using a Stack Navigator for just one page is perfectly fine! It provides the <strong>Header bar</strong> (styled in your signature orange color) and prepares your app to easily navigate to a second screen in the future.
+    </div>
+
+</div>
+
+</body>
+</html>
