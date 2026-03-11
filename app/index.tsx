@@ -77,7 +77,7 @@ export default function ProductScreen() {
       {/* ----- WHITE CARD ----- */}
       <View style={styles.whiteCard}>
         <Text style={styles.title}>
-          Relax 30 <br />
+          Relax 30 
           Dissolvable Wafers
         </Text>
         <Text style={styles.mg}>250 mg</Text>
