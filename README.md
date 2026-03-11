@@ -1,4 +1,5 @@
 ## Native UI Challange
+![NativeUI_Challange](https://socialify.git.ci/msizi007/NativeUI_Challange/image?language=1&name=1&owner=1&stargazers=1&theme=Light)
 
 This is the first react native app, UI Challange. The project challanges user to replicate the UI using react native components.
 
